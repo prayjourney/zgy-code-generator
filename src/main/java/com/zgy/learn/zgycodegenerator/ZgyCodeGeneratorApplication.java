@@ -1,12 +1,12 @@
-package com.zgy.learn.codegenerator;
+package com.zgy.learn.zgycodegenerator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CodeGeneratorApplication {
+public class ZgyCodeGeneratorApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CodeGeneratorApplication.class, args);
+        SpringApplication.run(ZgyCodeGeneratorApplication.class, args);
     }
 
 }

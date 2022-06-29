@@ -1,4 +1,4 @@
-package com.zgy.learn.codegenerator.util;
+package com.zgy.learn.zgycodegenerator.util;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;

@@ -1,6 +1,6 @@
-package com.zgy.learn.codegenerator.controller;
+package com.zgy.learn.zgycodegenerator.controller;
 
-import com.zgy.learn.codegenerator.util.Generator;
+import com.zgy.learn.zgycodegenerator.util.Generator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
