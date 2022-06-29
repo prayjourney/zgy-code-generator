@@ -9,6 +9,9 @@ spring:
     encoding: UTF-8
     suffix: .html
     prefix: classpath:/templates/
+  web:
+    resources:
+      static-locations: classpath:/static/
 
 # generator default config
 generator:
