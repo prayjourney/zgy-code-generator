@@ -21,18 +21,22 @@ import java.util.ArrayList;
  */
 @Component
 public class Generator {
-    @Value("${author}")
+    @Value("${generator.author}")
     private String author;
-    @Value("${project.path}")
+    @Value("${generator.outputPath}")
     private String projectPath;
-    @Value("${package.parent}")
+    @Value("${generator.package.parent}")
     private String packageParent;
-    @Value("${package.moudle}")
-    private String packageMoudle;
-    @Value("${datasource.dbUrl}")
-    private String datasourceDbUrl;
-    @Value("${datasource.tables}")
-    private String datasourceTables;
+    @Value("${generator.package.module}")
+    private String packageModule;
+    @Value("${generator.database.user}")
+    private String databaseUser;
+    @Value("${generator.database.password}")
+    private String databasePassword;
+    @Value("${generator.database.url}")
+    private String databaseUrl;
+    @Value("${generator.database.tables}")
+    private String databaseTables;
 
     public void generate() {
         // 1.构建一个代码自动生成器对象
@@ -54,17 +58,17 @@ public class Generator {
 
         // 3.设置数据源
         DataSourceConfig dsc = new DataSourceConfig();
-        String dbURL = "jdbc:mysql://" + datasourceDbUrl + "?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8";
+        String dbURL = "jdbc:mysql://" + databaseUrl + "?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8";
         dsc.setUrl(dbURL);
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("123456");
+        dsc.setUsername(databaseUser);
+        dsc.setPassword(databasePassword);
         dsc.setDbType(DbType.MYSQL);
         ag.setDataSource(dsc);
 
         // 4.包的设置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName(packageMoudle);
+        pc.setModuleName(packageModule);
         pc.setParent(packageParent);
         pc.setEntity("pojo");
         pc.setMapper("mapper");
@@ -76,7 +80,7 @@ public class Generator {
         // 5.策略配置
         StrategyConfig strategyConfig = new StrategyConfig();
         // 要映射的表名
-        strategyConfig.setInclude(datasourceTables.split(","));
+        strategyConfig.setInclude(databaseTables.split(","));
         // 驼峰命名
         strategyConfig.setNaming(NamingStrategy.underline_to_camel);
         // 自动lombok
