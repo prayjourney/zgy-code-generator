@@ -8,7 +8,7 @@ spring:
     cache: false
     encoding: UTF-8
     suffix: .html
-    prefix: classpath:/templates/
+    prefix: classpath:/views/
   web:
     resources:
       static-locations: classpath:/static/
