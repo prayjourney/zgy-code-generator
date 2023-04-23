@@ -16,12 +16,13 @@ spring:
 # generator default config
 generator:
   author: zgy
-  outputPath: d://s11/hello
+  # outputPath: d://s11/hello
+  outputPath: /Users/zgy/mycode/myprojects/generator
   package:
     module: hello
     parent: com.zgy.learn
   database:
     user: root
     password: 123456
-    url: localhost:3306/myschool
-    tables: city,teacher,parents,student,souvenir
+    url: localhost:3308/test
+    tables: user,userinfo

@@ -2,18 +2,22 @@ package com.zgy.learn.zgycodegenerator.util;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author zgy
@@ -77,7 +81,61 @@ public class Generator {
         pc.setController("controller");
         ag.setPackageInfo(pc);
 
-        // 5.策略配置
+        // 5.代码模版
+        FreemarkerTemplateEngine engine = new FreemarkerTemplateEngine();
+        ag.setTemplateEngine(engine);
+        // 配置模板
+        TemplateConfig templateConfig = new TemplateConfig();
+        // 配置自定义输出模板
+        // 指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
+        templateConfig.setEntity("/codeTemplates/entity.java");
+        templateConfig.setMapper("/codeTemplates/mapper.java");
+        templateConfig.setXml("/codeTemplates/mapper.xml");
+        templateConfig.setService("/codeTemplates/service.java");
+        templateConfig.setServiceImpl("/codeTemplates/serviceImpl.java");
+        templateConfig.setController("/codeTemplates/controller.java");
+        ag.setTemplate(templateConfig);
+
+        // 自定义配置
+        InjectionConfig cfg = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                Map<String, Object> map = new HashMap<>();
+                map.put("obj", packageParent + ".util");
+                map.put("camelTableName", databaseTables);
+                this.setMap(map);
+            }
+        };
+        // 特殊处理
+        String mapperTemplate = "/codeTemplates/mapper.xml.ftl";
+        String resultTemplate = "/codeTemplates/Result.java.ftl";
+        String messageTemplate = "/codeTemplates/MessageCode.java.ftl";
+        // 自定义输出配置
+        List<FileOutConfig> focList = new ArrayList<>();
+        // 自定义配置会被优先输出
+        focList.add(new FileOutConfig(mapperTemplate) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名, 如果Entity设置了前后缀, 此处注意xml的名称会跟着发生变化
+                return projectPath + "/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+            }
+        });
+        focList.add(new FileOutConfig(resultTemplate) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return projectPath + "/src/main/java/"+ packageParent +"/util/Result.java";
+            }
+        });
+        focList.add(new FileOutConfig(messageTemplate) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return projectPath + "/src/main/java/"+ packageParent +"/util/MessageCode.java";
+            }
+        });
+        cfg.setFileOutConfigList(focList);
+        ag.setCfg(cfg);
+
+        // 6.策略配置
         StrategyConfig strategyConfig = new StrategyConfig();
         // 要映射的表名
         strategyConfig.setInclude(databaseTables.split(","));
