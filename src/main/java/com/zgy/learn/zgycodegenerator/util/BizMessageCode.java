@@ -2,20 +2,23 @@ package com.zgy.learn.zgycodegenerator.util;
 
 import lombok.Getter;
 
+/**
+ * 统一的错误码
+ */
 @Getter
-public enum MessageCode2 {
+public enum BizMessageCode {
     SUCCESS(0, "success"), FAIL(1001, "fail");
     private Integer code;
     private String message;
 
-    private MessageCode2(Integer code, String message) {
+    private BizMessageCode(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
 
     public String getMessageByCode(Integer code) {
-        MessageCode2[] values = MessageCode2.values();
-        for (MessageCode2 val : values) {
+        BizMessageCode[] values = BizMessageCode.values();
+        for (BizMessageCode val : values) {
             if (val.getCode().equals(code)) {
                 return val.getMessage();
             }

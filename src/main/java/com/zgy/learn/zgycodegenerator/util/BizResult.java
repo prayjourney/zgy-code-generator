@@ -14,32 +14,32 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Result2<T> implements Serializable {
+public class BizResult<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private T data;
     private int code;
     private String message;
 
-    public Result2(T data) {
+    public BizResult(T data) {
         this.data = data;
         this.code = 0;
         this.message = "";
     }
 
-    public Result2(T data, String message) {
+    public BizResult(T data, String message) {
         this.data = data;
         this.code = 0;
         this.message = message;
     }
 
-    public Result2(T data, MessageCode2 messageCode) {
+    public BizResult(T data, BizMessageCode messageCode) {
         this.data = data;
         this.code = messageCode.getCode();
         this.message = messageCode.getMessage();
     }
 
-    public Result2(Throwable e, MessageCode2 messageCode) {
+    public BizResult(Throwable e, BizMessageCode messageCode) {
         this.code = messageCode.getCode();
         this.message = e.getMessage();
     }
