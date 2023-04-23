@@ -1,4 +1,4 @@
-package com.zgy.learn.zgycodegenerator.util;
+package com.zgy.learn.zgycodegenerator.biz;
 
 import lombok.Getter;
 

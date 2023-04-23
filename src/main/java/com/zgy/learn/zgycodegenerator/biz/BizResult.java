@@ -1,5 +1,6 @@
-package com.zgy.learn.zgycodegenerator.util;
+package com.zgy.learn.zgycodegenerator.biz;
 
+import com.zgy.learn.zgycodegenerator.biz.BizMessageCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
