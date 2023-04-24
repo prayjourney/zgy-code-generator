@@ -14,10 +14,7 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zgy
@@ -72,7 +69,7 @@ public class Generator {
 
         // 4.包的设置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName(packageModule);
+        //pc.setModuleName(packageModule); // 不设置module层级
         pc.setParent(packageParent);
         pc.setEntity("pojo");
         pc.setMapper("mapper");
@@ -100,12 +97,15 @@ public class Generator {
         InjectionConfig cfg = new InjectionConfig() {
             @Override
             public void initMap() {
+                // 自定义的配置, 在模版之中可以获取
                 Map<String, Object> map = new HashMap<>();
-                map.put("obj", packageParent + ".util");
+                map.put("packagePath", packageParent + ".util");
                 map.put("camelTableName", databaseTables);
                 this.setMap(map);
             }
         };
+        // String对象的split()方法, 返回的是分割之后的String数组, 当分割符是.或者是|时，必须使用\\进行转义, 即“\\|”,"\\."
+        String packageParentPath = String.join("/", Arrays.asList(packageParent.split("\\.")));
         // 特殊处理
         String mapperTemplate = "/codeTemplates/mapper.xml.ftl";
         String resultTemplate = "/codeTemplates/Result.java.ftl";
@@ -123,13 +123,13 @@ public class Generator {
         focList.add(new FileOutConfig(resultTemplate) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/src/main/java/"+ packageParent +"/util/Result.java";
+                return projectPath + "/src/main/java/"+ packageParentPath +"/util/Result.java";
             }
         });
         focList.add(new FileOutConfig(messageTemplate) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/src/main/java/"+ packageParent +"/util/MessageCode.java";
+                return projectPath + "/src/main/java/"+ packageParentPath +"/util/MessageCode.java";
             }
         });
         cfg.setFileOutConfigList(focList);

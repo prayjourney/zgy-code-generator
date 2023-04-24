@@ -1,7 +1,10 @@
-package ${package.Entity};
+package ${cfg.packagePath};
 
 import lombok.Getter;
 
+/**
+* 统一的错误码
+*/
 @Getter
 public enum MessageCode {
     SUCCESS(0, "success"), FAIL(1001, "fail");

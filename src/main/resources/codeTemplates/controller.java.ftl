@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${table.entityName};
-import ${cfg.obj}.Result;
+import ${cfg.packagePath}.Result;
 <#if swagger2>
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;

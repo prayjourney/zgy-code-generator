@@ -1,4 +1,4 @@
-package ${package.Entity};
+package ${cfg.packagePath};
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
