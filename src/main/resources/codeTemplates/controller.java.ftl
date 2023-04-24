@@ -52,32 +52,32 @@ public class ${table.controllerName} {
   </#if>
 
     @Autowired
-    private ${table.serviceName} ${cfg.camelTableName}Service;
+    private ${table.serviceName} ${table.name}Service;
 
 <#if swagger2>    @ApiOperation(value = "查询${entity}")</#if>
     @GetMapping(value = "/page")
-    public Result<IPage> get${entity}Page(Page<${entity}> page, ${entity} ${cfg.camelTableName}){
-        return new Result<>(${cfg.camelTableName}Service.page(page,Wrappers.query(${cfg.camelTableName})) );
+    public Result<IPage> get${entity}Page(Page<${entity}> page, ${entity} ${table.name}){
+        return new Result<>(${table.name}Service.page(page,Wrappers.query(${table.name})) );
     }
 
 <#if swagger2>    @ApiOperation(value = "新增${entity}")</#if>
     @PostMapping(value = "/add")
-    public Result create(@Valid @RequestBody ${entity} ${cfg.camelTableName}, BindingResult bindingResult){
+    public Result create(@Valid @RequestBody ${entity} ${table.name}, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             return new Result<>(fieldErrors);
         }
-        return new Result<>(${cfg.camelTableName}Service.save(${cfg.camelTableName}));
+        return new Result<>(${table.name}Service.save(${table.name}));
     }
 
 <#if swagger2>    @ApiOperation(value = "修改${entity}")</#if>
     @PutMapping(value = "/update")
-    public Result update(@Valid @RequestBody ${entity} ${cfg.camelTableName}, BindingResult bindingResult){
+    public Result update(@Valid @RequestBody ${entity} ${table.name}, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             return new Result<>(fieldErrors);
          }
-        return new Result<>(${cfg.camelTableName}Service.updateById(${cfg.camelTableName}));
+        return new Result<>(${table.name}Service.updateById(${table.name}));
     }
 
     <#list table.fields as field>
@@ -85,7 +85,7 @@ public class ${table.controllerName} {
     <#if swagger2>@ApiOperation(value = "删除${entity}")</#if>
     @DeleteMapping(value = "/delete/{${field.propertyName}}")
     public Result delete(@PathVariable ${field.propertyType} ${field.propertyName}){
-        return new Result<>(${cfg.camelTableName}Service.removeById(${field.propertyName}));
+        return new Result<>(${table.name}Service.removeById(${field.propertyName}));
     }
          </#if>
     </#list>
