@@ -104,7 +104,6 @@ public class Generator {
                 map.put("projectName", projectName);
                 map.put("packageParent", packageParent);
                 map.put("packagePath", packageParent + ".util");
-                map.put("camelTableName", databaseTables);
                 this.setMap(map);
             }
         };
