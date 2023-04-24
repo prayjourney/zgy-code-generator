@@ -23,7 +23,6 @@ public class GeneratorController {
     public JSONObject generator() {
         JSONObject result = new JSONObject();
         result.putOpt("code", 1);
-        result.putOpt("message", "error");
         try {
             log.info("开始生成项目, 时间是:{}", DateUtil.now());
             generator.generate();
@@ -32,6 +31,8 @@ public class GeneratorController {
             result.putOpt("message", "success");
             return result;
         } catch (Exception e) {
+            log.error("发生错误:{}", e.getMessage());
+            result.putOpt("message", e.getMessage());
             return result;
         }
     }
