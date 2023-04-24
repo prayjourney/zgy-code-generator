@@ -54,7 +54,7 @@ public class Generator {
         // 是否覆盖
         gc.setFileOverride(false);
         // 去掉service的I前缀
-        gc.setServiceName("%sSevice");
+        gc.setServiceName("%sService");
         gc.setDateType(DateType.ONLY_DATE);
         gc.setSwagger2(true);
         ag.setGlobalConfig(gc);

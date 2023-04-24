@@ -6,4 +6,5 @@ ${AnsiColor.CYAN}
 /___/\__, /\__, /      \___/\____/\__,_/\___/      \__, /\___/_/ /_/\___/_/   \__,_/\__/\____/_/     
     /____//____/                                  /____/
 
+:: http://localhost:${server.port} ::
 :: Spring Boot ::                (v2.6.9), based on MybatisPlus-Generator 3.4.1
