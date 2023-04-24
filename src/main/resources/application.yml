@@ -21,6 +21,8 @@ generator:
   package:
     module: hello
     parent: com.zgy.learn
+  project:
+    name: ProjectName
   database:
     user: root
     password: 123456

@@ -30,6 +30,8 @@ public class Generator {
     private String packageParent;
     @Value("${generator.package.module}")
     private String packageModule;
+    @Value("${generator.project.name}")
+    private String projectName;
     @Value("${generator.database.user}")
     private String databaseUser;
     @Value("${generator.database.password}")
@@ -99,6 +101,8 @@ public class Generator {
             public void initMap() {
                 // 自定义的配置, 在模版之中可以获取
                 Map<String, Object> map = new HashMap<>();
+                map.put("projectName", projectName);
+                map.put("packageParent", packageParent);
                 map.put("packagePath", packageParent + ".util");
                 map.put("camelTableName", databaseTables);
                 this.setMap(map);
@@ -108,6 +112,7 @@ public class Generator {
         String packageParentPath = String.join("/", Arrays.asList(packageParent.split("\\.")));
         // 特殊处理
         String mapperTemplate = "/codeTemplates/mapper.xml.ftl";
+        String mainAppTemplate = "/codeTemplates/Main.java.ftl";
         String resultTemplate = "/codeTemplates/Result.java.ftl";
         String messageTemplate = "/codeTemplates/MessageCode.java.ftl";
         // 自定义输出配置
@@ -120,16 +125,22 @@ public class Generator {
                 return projectPath + "/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
+        focList.add(new FileOutConfig(mainAppTemplate) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return projectPath + "/src/main/java/" + packageParentPath + "/" + projectName + ".java";
+            }
+        });
         focList.add(new FileOutConfig(resultTemplate) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/src/main/java/"+ packageParentPath +"/util/Result.java";
+                return projectPath + "/src/main/java/" + packageParentPath + "/util/Result.java";
             }
         });
         focList.add(new FileOutConfig(messageTemplate) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/src/main/java/"+ packageParentPath +"/util/MessageCode.java";
+                return projectPath + "/src/main/java/" + packageParentPath + "/util/MessageCode.java";
             }
         });
         cfg.setFileOutConfigList(focList);
